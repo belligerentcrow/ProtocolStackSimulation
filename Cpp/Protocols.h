@@ -1,8 +1,11 @@
 #include <string>
+#include <vector>
 class Application;
 class Transport;
 class Internetwork;
 class NetworkAccess;
+class Message;
+class Segment;
 
 class Protocol{
     public:
@@ -29,7 +32,7 @@ class Transport : public Protocol{
         Application * appl;
         Internetwork *netw;
     public:
-        void incapsulate(Message m, std::string d);
+        void incapsulate(Message m, std::string dest);
         void decapsulate();
         void setAppl(Application* appls);
         void setNetw(Internetwork* netwk);

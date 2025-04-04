@@ -19,11 +19,11 @@ Device::Device(std::string name){
 }
 
 void Device::sendMessage(std::string str){
-    this->app.incapsulate(str);
+    this->app.incapsulate(str, "8080");
 }
 
 int main(){
     Device d1("computer1");
-    d1.app.incapsulate("hello");
+    d1.sendMessage("hello");
     std::cout <<"works?";
 }
