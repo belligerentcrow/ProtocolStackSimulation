@@ -22,8 +22,8 @@ void Device::sendMessage(std::string str){
     this->app.incapsulate(str, "8080");
 }
 
-int main(){
+int main(int argc, char *argv[]){
     Device d1("computer1");
     d1.sendMessage("hello");
-    std::cout <<"works?";
+    std::cout <<"\nworks?\n";
 }

@@ -12,7 +12,7 @@ void Application::incapsulate(std::string msg, std::string dest){
     for(char& _char : msg){
         encodedString+=std::bitset<8>(_char).to_string();
     }
-    std::cout<<encodedString;
+    //std::cout<<encodedString;
     Message message(encodedString);
     this->tr->incapsulate(message, dest);
 
@@ -33,9 +33,11 @@ Transport::Transport(std::string src){
     this->source = src;
 }
 
+
+//Add zeroes trailing after last packet? 
 std::vector<std::string> Transport::segmentate(std::string s, int num){
     std::vector<std::string> v;
-    for(int i =0; i<num;++i){
+    for(int i =0; i<num;i+=maxSegmentSize){
         v.push_back(s.substr(i,this->maxSegmentSize));
     }
     return v;
@@ -45,8 +47,10 @@ void Transport::incapsulate(Message m, std::string dest){
 
     if(m.payload.length()>this->maxSegmentSize){
         int packNumbers = ceil(m.payload.length()/maxSegmentSize);
-        std::vector<std::string> packPayls;
+        std::vector<std::string> packPayls=segmentate(m.payload, m.payload.length());
+        std::cout<<"\n Segments: \n";
         for(int i = 0; i<packPayls.size(); ++i){
+            std::cout << packPayls[i]<<"\n";
             Segment segm = Segment(packPayls[i], this->source, dest, i);
             this->netw->incapsulate(segm);
         }
