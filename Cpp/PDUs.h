@@ -31,6 +31,13 @@ class Segment : public PDU{
 };
 
 class Datagram : public PDU{
+    std::bitset<32> ip_add;
+    Segment myseg;
+    public:
+    Datagram(Segment s, std::bitset<32> a){
+        this->myseg = s;
+        this->ip_addr=a;
+    }
 
 };
 

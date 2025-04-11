@@ -1,5 +1,6 @@
 #include <string>
 #include <vector>
+#include <bitset>
 class Application;
 class Transport;
 class Internetwork;
@@ -43,11 +44,15 @@ class Transport : public Protocol{
 class Internetwork : public Protocol{
         Transport * transp;
         NetworkAccess * netaccs;
+        std::bitset<32> ipAddress;
+
     public:
         void incapsulate(Segment s);
         void decapsulate();
         void setTransp(Transport* transprt);
         void setNetAcc(NetworkAccess* netaccess);
+        Internetwork(sockaddr_in ip)
+        
 };
 
 class NetworkAccess : public Protocol{

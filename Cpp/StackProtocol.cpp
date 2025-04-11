@@ -5,6 +5,7 @@
 #include <iostream>
 #include <cmath>
 #include <vector>
+#include <arpa/inet.h>
 
 // Application Methods
 void Application::incapsulate(std::string msg, std::string dest){
@@ -54,7 +55,6 @@ void Transport::incapsulate(Message m, std::string dest){
             Segment segm = Segment(packPayls[i], this->source, dest, i);
             this->netw->incapsulate(segm);
         }
-        
     }
 }
 
@@ -70,8 +70,17 @@ void Transport::setNetw(Internetwork* netwrk){
 }
 
 //Internetwork Methods
+
+Internetwork::Internetwork(sockaddr_in ipaddr){
+    char *some_addr = inet_atoa(ipaddr.sin_addr);
+    std::bitset<32> bitIP =std::bitset<32>(some_addr).to_string();
+    this->ipAddress = bitIP;
+
+}
+
 void Internetwork::incapsulate(Segment s){
-    
+    Datagram data = Datagram(s, this->ipAddress);
+    this->netw->incapsulate(data);
 }
 
 void Internetwork::decapsulate(){
