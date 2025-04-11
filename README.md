@@ -1,5 +1,5 @@
 # ProtocolStackSimulation
-A simulation of the TCP-IP Protocol Stack written in OOP. Computer Networks UniCT Exercise.
+A simulation of the TCP-IP Protocol Stack written in C++. Computer Networks UniCT Exercise.
 
 ### C++ version
 
