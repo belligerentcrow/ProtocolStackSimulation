@@ -1,19 +1,20 @@
 #include "Devices.h"
 #include <string>
 #include <bitset>
-#include <sys/
-#include <netinet/in.h>
+#include <stack>
+//#include <sys/
+//#include <netinet/in.h>
 
-Device::Device(std::string name){
-    //create levels
-    struct sockaddr_in myaddr;
-    myaddr.sin_family = AF_INET;
-    inet_aton("151.97.34.220", &myaddr.sin_addr.s_addr);
-    
-    this->app = Application();
+class Frame;
+
+Device::Device(std::string name, std::string ip, std::stack<Frame> * sharedStack){
     this->deviceName = name;
-    this->internetw = Internetwork(sockaddr_in myaddr);
-    this->netwacc = NetworkAccess();
+    this->sharedStack = sharedStack;
+
+    //create levels
+    this->app = Application();
+    this->internetw = Internetwork(ip);
+    this->netwacc = NetworkAccess(12121);
     this->transp = Transport("29303");
 
     //give references
@@ -22,15 +23,24 @@ Device::Device(std::string name){
     transp.setNetw(&internetw);
     internetw.setTransp(&transp);
     internetw.setNetAcc(&netwacc);
-    netwacc.setNetw(&internetw);
+    netwacc.setNetwAndStack(&internetw,sharedStack);
 }
 
 void Device::sendMessage(std::string str){
     this->app.incapsulate(str, "8080");
 }
+void Device::receiveMessage(){
+    this->netwacc.decapsulate();
+}
 
 int main(int argc, char *argv[]){
-    Device d1("computer1");
-    d1.sendMessage("hello");
-    std::cout <<"\nworks?\n";
+    std::stack<Frame> sharedStack = std::stack<Frame>();
+    std::stack<Frame> * stackp = &sharedStack; 
+    std::cout<<"Create device\n";
+    Device d1("computer1", "151.92.39.15",stackp);
+    Device d2("computer2", "123.234.2.1",stackp);
+    std::cout<<"Sending message\n";
+    d1.sendMessage("hello world");
+    d2.receiveMessage();
+    //std::cout <<"\nworks?\n";
 }

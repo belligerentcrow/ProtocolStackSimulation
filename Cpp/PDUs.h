@@ -1,5 +1,7 @@
 #include <string>
 #include <cstring>
+#include <stdlib.h>
+#include <bitset>
 
 class PDU{
     public:
@@ -28,19 +30,30 @@ class Segment : public PDU{
         this->destination = dst;
         this->seqNumber= sqnmb;
     }
+    Segment(){};
 };
 
 class Datagram : public PDU{
+    public:
     std::bitset<32> ip_add;
     Segment myseg;
-    public:
     Datagram(Segment s, std::bitset<32> a){
         this->myseg = s;
-        this->ip_addr=a;
+        this->ip_add=a;
     }
+    Datagram(){};
 
 };
 
 class Frame : public PDU{
-
+    public:
+    int header;
+    int padding;
+    Datagram datg;
+    Frame(Datagram d, int na){
+        this->datg=d;
+        this->header=12121;
+        this->padding=-1;
+    }
+    Frame(){}
 };

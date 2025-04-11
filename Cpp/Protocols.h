@@ -1,12 +1,16 @@
 #include <string>
 #include <vector>
 #include <bitset>
+#include <stack>
 class Application;
 class Transport;
 class Internetwork;
 class NetworkAccess;
 class Message;
 class Segment;
+class Datagram;
+class Frame;
+
 
 class Protocol{
     public:
@@ -19,7 +23,8 @@ class Application : public Protocol{
         Transport * tr;
     public:
         void incapsulate(std::string str, std::string d);
-        void decapsulate();
+        void decode(std::string encode);
+        void decapsulate(std::string s);
         void setTransp(Transport * transp);
         
 };
@@ -34,31 +39,39 @@ class Transport : public Protocol{
         Internetwork *netw;
     public:
         void incapsulate(Message m, std::string dest);
-        void decapsulate();
+        void decapsulate(std::vector<Segment> s);
         void setAppl(Application* appls);
         void setNetw(Internetwork* netwk);
         Transport(std::string src);
         Transport(){};
 };
 
+//Note: the initial idea was to create InternetWork with the sockaddr_in struct. 
+//Idea abandoned due to Linux - Windows network interface incompatibilities. 
 class Internetwork : public Protocol{
         Transport * transp;
         NetworkAccess * netaccs;
-        std::bitset<32> ipAddress;
+        int ipAddress;
 
     public:
         void incapsulate(Segment s);
-        void decapsulate();
+        void decapsulate(std::vector<Datagram> d);
         void setTransp(Transport* transprt);
         void setNetAcc(NetworkAccess* netaccess);
-        Internetwork(sockaddr_in ip)
+        Internetwork(std::string ip);
+        Internetwork();
         
 };
 
 class NetworkAccess : public Protocol{
         Internetwork *netwk;
+        std::stack<Frame> * datastack;
+        int naccs;
     public:
-    void incapsulate();
+    void incapsulate(Datagram d);
     void decapsulate();
-    void setNetw(Internetwork* internetwk);
+    void setNetwAndStack(Internetwork* internetwk, std::stack<Frame> * stk);
+    void putFrameInMemory(Frame f);
+    NetworkAccess(int naccsAddr);
+    NetworkAccess();
 };
