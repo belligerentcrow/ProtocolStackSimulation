@@ -12,17 +12,15 @@ class PDU{
 
 
 class Message : public PDU{
-    //std::string extension;
-
+    //Idea: add std::string extension;
     public:
     Message(std::string msg){
         this->payload = msg;
     }
-    
 };
 
 class Segment : public PDU{
-    int seqNumber;
+    int seqNumber; //Not used right now because of the nature of the stack: to be implemented 
     public:
     Segment(std::string p, std::string src, std::string dst, int sqnmb){
         this->payload = p;

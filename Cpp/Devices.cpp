@@ -2,10 +2,8 @@
 #include <string>
 #include <bitset>
 #include <stack>
-//#include <sys/
-//#include <netinet/in.h>
 
-class Frame;
+class Frame; //forward declaration 
 
 Device::Device(std::string name, std::string ip, std::stack<Frame> * sharedStack){
     this->deviceName = name;
@@ -34,13 +32,17 @@ void Device::receiveMessage(){
 }
 
 int main(int argc, char *argv[]){
-    std::stack<Frame> sharedStack = std::stack<Frame>();
-    std::stack<Frame> * stackp = &sharedStack; 
-    std::cout<<"Create device\n";
+
+    std::stack<Frame> sharedStack = std::stack<Frame>(); //creating a shared stack for the devices
+    std::stack<Frame> * stackp = &sharedStack;  // pointer to the stack
+    std::cout<<"Creating devices\n";
     Device d1("computer1", "151.92.39.15",stackp);
     Device d2("computer2", "123.234.2.1",stackp);
-    std::cout<<"Sending message\n";
-    d1.sendMessage("hello world");
+    
+    std::string x = "hello world";
+    std::cout<<"Sending message:"<< x <<"\n";
+    d1.sendMessage(x);
+    std::cout<<"\t\n";
+    std::cout<<"Receiving message from second device:"<<"\n";
     d2.receiveMessage();
-    //std::cout <<"\nworks?\n";
 }

@@ -23,9 +23,10 @@ class Application : public Protocol{
         Transport * tr;
     public:
         void incapsulate(std::string str, std::string d);
-        void decode(std::string encode);
-        void decapsulate(std::string s);
+        std::string decode(std::string encode);
+        void decapsulate(Message m);
         void setTransp(Transport * transp);
+        void printToScreen(std::string s);
         
 };
 
