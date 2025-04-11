@@ -1,5 +1,0 @@
-class PDU:
-    payload;
-    header;
-
-    
