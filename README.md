@@ -13,5 +13,4 @@ When one invokes the Device method `receiveMessage()`, the NetworkAccess level o
   
 `Devices.cpp` and `StackProtocol.cpp` should be compiled together. (`$g++ Devices.cpp StackProtocol.cpp` then `\a.out` or `\a.exe` if you are a Windows user.)
 
-TODO:   
-* TODO
+![UML Diagram of the Project](ProtocolStackSimulation.jpg)
