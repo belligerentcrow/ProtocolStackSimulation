@@ -109,7 +109,7 @@ void Transport::setNetw(Internetwork* netwrk){
 //Internetwork Methods
 
 //converts a "x.x.x.x" kind of string into a xxxx kind of int 
-int getIP(std::string ip){ 
+int Internetwork::getIP(std::string ip){ 
     std::string ipconcat ="";
     for(char& c: ip){
         if(c!='.'){

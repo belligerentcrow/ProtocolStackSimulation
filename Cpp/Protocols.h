@@ -53,7 +53,7 @@ class Internetwork : public Protocol{
         Transport * transp;
         NetworkAccess * netaccs;
         int ipAddress;
-
+        int getIP(std::string ip);
     public:
         void incapsulate(Segment s);
         void decapsulate(std::vector<Datagram> d);
