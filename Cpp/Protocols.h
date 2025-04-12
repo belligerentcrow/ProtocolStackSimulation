@@ -68,11 +68,11 @@ class NetworkAccess : public Protocol{
         Internetwork *netwk;
         std::stack<Frame> * datastack;
         int naccs;
+        void putFrameInMemory(Frame f);
     public:
     void incapsulate(Datagram d);
     void decapsulate();
     void setNetwAndStack(Internetwork* internetwk, std::stack<Frame> * stk);
-    void putFrameInMemory(Frame f);
     NetworkAccess(int naccsAddr);
     NetworkAccess();
 };
