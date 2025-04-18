@@ -1,4 +1,5 @@
 TODO
+* Create Makefile
 * Implement some "input" syntax check  
     * es: check for correct IP format
 * Let IP Addr and string to send be collected from CLI user input 
