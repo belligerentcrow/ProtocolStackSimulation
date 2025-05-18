@@ -45,4 +45,5 @@ int main(int argc, char *argv[]){
     std::cout<<"\t\n";
     std::cout<<"Receiving message from second device:"<<"\n";
     d2.receiveMessage();
+    std::cout<<"\n";
 }
